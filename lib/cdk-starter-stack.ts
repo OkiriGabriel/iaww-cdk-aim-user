@@ -33,8 +33,8 @@ export class CdkStarterStack extends cdk.Stack {
     );
 
     // 👇 Create User
-    const user = new iam.User(this, 'example-user', {
-      userName: 'example-user',
+    const user = new iam.User(this, 'datadog-user', {
+      userName: 'datadog-use',
       managedPolicies: [loggingManagedPolicy],
       groups: [group],
       permissionsBoundary,
@@ -42,7 +42,7 @@ export class CdkStarterStack extends cdk.Stack {
 
     // 👇 add a managed policy to the user
     user.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3ReadOnlyAccess'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('IAMFullAccess'),
     );
 
     // 👇 create an inline policy

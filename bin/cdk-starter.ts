@@ -6,7 +6,7 @@ const app = new cdk.App();
 new CdkStarterStack(app, 'cdk-stack', {
   stackName: 'cdk-stack',
   env: {
-    region: process.env.CDK_DEFAULT_REGION,
+    region: "us-east-1",
     account: process.env.CDK_DEFAULT_ACCOUNT,
   },
 });

@@ -1,0 +1,44 @@
+#bitbucket-pipelines.yml
+image: node:16.3.0
+definitions:
+  steps:
+    - step: &build-infrastructure
+        name: Build infrastructure changes
+        script:
+          - /bin/bash ./scripts/build.sh
+    - step: &deploy-infrastructure
+        name: Build and deploy infrastructure changes
+        script:
+          - /bin/bash ./scripts/deploy.sh
+
+pipelines:
+  custom: # Pipelines that can only be triggered manually
+    deploy-stack:
+      - step:
+          <<: *deploy-infrastructure
+          deployment: Test
+    destroy-stack:
+      - step:
+          name: Destroy Stack
+          script:
+            - echo "Destroy infrastructure stack"
+
+  pull-requests:
+    "**": #this runs as default for any branch not elsewhere defined
+      - step:
+          name: Pull request step 1
+          script:
+            - echo "Pull requests pipeline steps go here"
+  branches:
+    develop:
+      - step:
+          <<: *deploy-infrastructure
+          deployment: Test
+    release/*:
+      - step:
+          <<: *deploy-infrastructure
+          deployment: Staging
+    main:
+      - step:
+          <<: *deploy-infrastructure
+          deployment: Production
